@@ -1,0 +1,666 @@
+<HTML>
+<HEAD>
+  <TITLE>Numbers to words</TITLE>
+</HEAD><script LANGUAGE="JavaScript">
+<!--- hide from old browsers --- >
+
+function ClearForm(form)  {
+//clear forms
+	form.Number.value = '';
+	form.English.value = '';
+	form.Portuguese.value = '';
+	form.Spanish.value = '';
+	form.French.value = '';
+}
+
+
+function FixSpaces(s){
+//returns a string with no double spaces inside
+	var t='';
+	for(var i=0; i<s.length; i++){
+		if (i>0){
+			if (!((s.substring(i-1,i)==' ')&(s.substring(i,i+1)==' ')))
+				t=t+s.substring(i,i+1);
+		}else
+			t=t+s.substring(i,i+1);
+	}
+	return t;
+}
+
+function Calculate(form)  {
+//fill forms with text
+	var Ner = form.Number.value;
+	form.English.value = NumbersWords(Ner);
+	form.Portuguese.value = NumerosPalavras(Ner);
+	form.Spanish.value = NumerosPalabras(Ner);
+	form.French.value = NumerosMots(Ner);
+}
+
+function REPLICATE(n, c){
+//returns n times char c
+	var t='';
+	for(var i=1; i<=n; i++)
+		t=t+c;
+	return t;
+}
+
+function NumbersWords(s)  {
+//English words for numbers
+	var a,b,c,j,orlen,result='';
+	if (s=='0') {return ('zero');}
+		orlen=s.length;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	for (var i = 0; i < s.length; i=i+3) {
+		j=s.length-i-1;
+		a=s.substring(j, j+1);
+		b=s.substring(j-1, j);
+		c=s.substring(j-2, j-1);
+		if (a!=' '){
+			if ((i==3)&(c+b+a!='000') ) {result='thousand '+result;}
+			else if ((i==6)&(c+b+a!='000') ) {result='million '+result;}
+			else if ((i==9)&(c+b+a!='000') ) {result='billion '+result;}
+			else if ((i==12)&(c+b+a!='000') ) {result='trillion '+result;}
+			else if ((i==15)&(c+b+a!='000') ) {result='quadrillion '+result;}
+			else if ((i==18)&(c+b+a!='000') ) {result='quintillion '+result;}
+			else if ((i==21)&(c+b+a!='000') ) {result='sextillion '+result;}
+			else if ((i==24)&(c+b+a!='000') ) {result='septillion '+result;}
+			else if ((i==27)&(c+b+a!='000') ) {result='octillion '+result;}
+			else if ((i==30)&(c+b+a!='000') ) {result='nonillion '+result;}
+			else if ((i==33)&(c+b+a!='000') ) {result='decillion '+result;}
+			else if ((i==36)&(c+b+a!='000') ) {result='undecillion '+result;}
+			else if ((i==39)&(c+b+a!='000') ) {result='duodecillion '+result;}
+			else if ((i==42)&(c+b+a!='000') ) {result='tredecillion '+result;}
+			else if ((i==45)&(c+b+a!='000') ) {result='quattuordecillion '+result;}
+			else if ((i==48)&(c+b+a!='000') ) {result='quindecillion '+result;}
+			else if ((i==51)&(c+b+a!='000') ) {result='sexdecillion '+result;}
+			else if ((i==54)&(c+b+a!='000') ) {result='septendecillion '+result;}
+			else if ((i==57)&(c+b+a!='000') ) {result='octodecillion '+result;}
+			else if (i==60) {result='novemdecillion '+result;}
+		}
+		if ((b!='1') | (b==' ')){
+			if (a==1){result='one '+result;}
+			else if (a==2){result='two '+result;}
+			else if (a==3){result='three '+result;}
+			else if (a==4){result='four '+result;}
+			else if (a==5){result='five '+result;}
+			else if (a==6){result='six '+result;}
+			else if (a==7){result='seven '+result;}
+			else if (a==8){result='eight '+result;}
+			else if (a==9){result='nine '+result;}
+		}
+		if ((b!=' ')&(b!='0')){
+			if (b=='1'){
+				if (a==0){result='ten '+result;}
+				else if (a==1){result='eleven '+result;}
+				else if (a==2){result='twelve '+result;}
+				else if (a==3){result='thirteen '+result;}
+				else if (a==4){result='fourteen '+result;}
+				else if (a==5){result='fifteen '+result;}
+				else if (a==6){result='sixteen '+result;}
+				else if (a==7){result='seventeen '+result;}
+				else if (a==8){result='eighteen '+result;}
+				else if (a==9){result='nineteen '+result;}
+			}
+			else{
+				if (b==2){result='twenty '+result;}
+				else if (b==3){result='thirty '+result;}
+				else if (b==4){result='fourty '+result;}
+				else if (b==5){result='fifty '+result;}
+				else if (b==6){result='sixty '+result;}
+				else if (b==7){result='seventy '+result;}
+				else if (b==8){result='eighty '+result;}
+				else if (b==9){result='ninety '+result;}
+			}
+		}
+		if ((c!=' ')&(c!='0')){
+			if (c==1){result='one hundred '+result;}
+			else if (c==2){result='two hundred '+result;}
+			else if (c==3){result='three hundred '+result;}
+			else if (c==4){result='four hundred '+result;}
+			else if (c==5){result='five hundred '+result;}
+			else if (c==6){result='six hundred '+result;}
+			else if (c==7){result='seven hundred '+result;}
+			else if (c==8){result='eight hundred '+result;}
+			else if (c==9){result='nine hundred '+result;}
+		}
+	}
+	result=Trim(result);
+	result=FixSpaces(result);
+	return (result);
+}
+
+function NumerosPalabras(s)  {
+//Spanish words for numbers
+	var a,b,c,j,orlen,result='';
+	if (s=='0') {return ('cero');}
+		orlen=s.length;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	for (var i = 0; i < s.length; i=i+3) {
+		j=s.length-i-1;
+		a=s.substring(j, j+1);
+		b=s.substring(j-1, j);
+		c=s.substring(j-2, j-1);
+		if (a!=' '){
+			if ((i==3)&(c+b+a!='000') ) {result='mil '+result;}
+			else if (((i==6)&(c+b+a!='000') ) &(orlen==7)&(a=='1')) {result='millón '+result;}
+			else if ((i==6)&(c+b+a!='000') ) {result='millones '+result;}
+			else if ((i==9)&(c+b+a!='000') ) {result='mil millones'+result;}
+			else if (((i==12)&(c+b+a!='000') ) & (orlen==13)&(a=='1')) {result='billón '+result;}
+			else if ((i==12)&(c+b+a!='000') ) {result='billones '+result;}
+			else if ((i==15)&(c+b+a!='000') ) {result='mil billones'+result;}
+			else if (((i==18)&(c+b+a!='000') )& (orlen==19)&(a=='1'))  {result='trillón '+result;}
+			else if ((i==18)&(c+b+a!='000') ) {result='trillones '+result;}
+			else if ((i==21)&(c+b+a!='000') ) {result='mil trillones '+result;}
+			else if (((i==24)&(c+b+a!='000') )& (orlen==25)&(a=='1')) {result='quadrillón '+result;}
+			else if ((i==24)&(c+b+a!='000') ) {result='quadrillones '+result;}
+			else if ((i==27)&(c+b+a!='000') ) {result='mil quadrillones '+result;}
+			else if (((i==30)&(c+b+a!='000') )& (orlen==31)&(a=='1')) {result='quintillón '+result;}
+			else if ((i==30)&(c+b+a!='000') ) {result='quintillones '+result;}
+			else if ((i==33)&(c+b+a!='000') ) {result='mil quintillones '+result;}
+			else if (((i==36)&(c+b+a!='000') )& (orlen==37)&(a=='1')) {result='sextillón '+result;}
+			else if ((i==36)&(c+b+a!='000') ) {result='sextillones '+result;}
+			else if ((i==39)&(c+b+a!='000') ) {result='mil sextillones '+result;}
+			else if (((i==42)&(c+b+a!='000') )& (orlen==43)&(a=='1')) {result='septillón '+result;}
+			else if ((i==42)&(c+b+a!='000') ) {result='septillones '+result;}
+			else if ((i==45)&(c+b+a!='000') ) {result='milseptillones '+result;}
+			else if (((i==48)&(c+b+a!='000') )& (orlen==49)&(a=='1')) {result='octillón '+result;}
+			else if ((i==48)&(c+b+a!='000') ) {result='octillones '+result;}
+			else if ((i==51)&(c+b+a!='000') ) {result='mil octillones '+result;}
+			else if (((i==54)&(c+b+a!='000') )& (orlen==55)&(a=='1')) {result='nonillón '+result;}
+			else if ((i==57)&(c+b+a!='000') ) {result='nonillones '+result;}
+			else if (i==60) {result='mil nonillones '+result;}
+		}
+		if ((b!=1) | (b==' ')){
+			if (a==1){result='un '+result;}
+			else if (a==2){result='dos '+result;}
+			else if (a==3){result='tres '+result;}
+			else if (a==4){result='cuatro '+result;}
+			else if (a==5){result='cinco '+result;}
+			else if (a==6){result='seis '+result;}
+			else if (a==7){result='siete '+result;}
+			else if (a==8){result='ocho '+result;}
+			else if (a==9){result='nueve '+result;}
+		}
+		if ((b!=' ')&(b!='0')){
+			if ((b==1) | (b==2)){
+				if (b+a==10){result='diez '+result;}
+				else if (b+a==11){result='once '+result;}
+				else if (b+a==12){result='doce '+result;}
+				else if (b+a==13){result='trece '+result;}
+				else if (b+a==14){result='catorce '+result;}
+				else if (b+a==15){result='quince '+result;}
+				else if (b+a==16){result='dieciséis '+result;}
+				else if (b+a==17){result='diecisiete '+result;}
+				else if (b+a==18){result='dieciocho '+result;}
+				else if (b+a==19){result='diecinueve '+result;}
+				else if (b+a==20){result='veinte '+result;}
+				else if (b+a==21){result='veintiuno '+result;}
+				else if (b+a==22){result='veintidós '+result;}
+				else if (b+a==23){result='veintitrés '+result;}
+				else if (b+a==24){result='veinticuatro '+result;}
+				else if (b+a==25){result='veinticinco '+result;}
+				else if (b+a==26){result='veintiséis '+result;}
+				else if (b+a==27){result='veintisiete '+result;}
+				else if (b+a==28){result='veintiocho '+result;}
+				else if (b+a==29){result='veintinueve '+result;}
+			}
+			else{
+				var temp=''
+				if (a!=0){temp='y ';}
+				if (b==3){result='treinta '+temp+result;}
+				else if (b==4){result='cuarenta '+temp+result;}
+				else if (b==5){result='cincuenta '+temp+result;}
+				else if (b==6){result='sesenta '+temp+result;}
+				else if (b==7){result='setenta '+temp+result;}
+				else if (b==8){result='ochenta '+temp+result;}
+				else if (b==9){result='noventa '+temp+result;}
+				
+				}
+		}
+		if ((c!=' ')&(c!='0')){
+			if ((a=='0') & (b=='0')){
+				if (c==1){result='cien '+result;}
+				else if (c==2){result='doscientos '+result;}
+				else if (c==3){result='trescientos '+result;}
+				else if (c==4){result='cuatrocientos '+result;}
+				else if (c==5){result='quinientos '+result;}
+				else if (c==6){result='seiscientos '+result;}
+				else if (c==7){result='setecientos '+result;}
+				else if (c==8){result='ochocientos '+result;}
+				else if (c==9){result='novecientos '+result;}
+			}
+			else{
+				if (c==1){result='ciento '+result;}
+				else if (c==2){result='doscientos '+result;}
+				else if (c==3){result='trescientos '+result;}
+				else if (c==4){result='cuatrocientos '+result;}
+				else if (c==5){result='quinientos '+result;}
+				else if (c==6){result='seiscientos '+result;}
+				else if (c==7){result='setecientos '+result;}
+				else if (c==8){result='ochocientos '+result;}
+				else if (c==9){result='novecientos '+result;}
+			}
+		}
+	}
+	result=FixSpaces(result);
+	result=Trim(result);
+	if (result.substring(0, 7)=='un mil ') result=result.substring(3,result.length);
+	if (result.substring(result.length-3, result.length)==' un') result=result+'o';
+	if (result=='un ') result='uno';
+	if (result.substring(result.length-2, result.length)=='y ') 
+		result=result.substring(0,result.length-2);
+if (InStr(result, 'millones')!=RInStr(result, 'millones'))
+	{var z=InStr(result, 'millones')
+	result=result.substring(0,z-1)+result.substring(z+7,result.length);}
+if (InStr(result, 'billones')!=RInStr(result, 'billones'))
+	{var z=InStr(result, 'billones')
+	result=result.substring(0,z-1)+result.substring(z+7,result.length);}
+if (InStr(result, 'trillones')!=RInStr(result, 'trillones'))
+	{var z=InStr(result, 'trillones')
+	result=result.substring(0,z-1)+result.substring(z+8,result.length);}
+if (InStr(result, 'quadrillones')!=RInStr(result, 'quadrillones'))
+	{var z=InStr(result, 'quadrillones')
+	result=result.substring(0,z-1)+result.substring(z+11,result.length);}
+if (InStr(result, 'quintillones')!=RInStr(result, 'quintillones'))
+	{var z=InStr(result, 'quintillones')
+	result=result.substring(0,z-1)+result.substring(z+11,result.length);}
+if (InStr(result, 'sextillones')!=RInStr(result, 'sextillones'))
+	{var z=InStr(result, 'sextillones')
+	result=result.substring(0,z-1)+result.substring(z+10,result.length);}
+if (InStr(result, 'septillones')!=RInStr(result, 'septillones'))
+	{var z=InStr(result, 'septillones')
+	result=result.substring(0,z-1)+result.substring(z+10,result.length);}
+if (InStr(result, 'octillones')!=RInStr(result, 'octillones'))
+	{var z=InStr(result, 'octillones')
+	result=result.substring(0,z-1)+result.substring(z+9,result.length);}
+if (InStr(result, 'nonillones')!=RInStr(result, 'nonillones'))
+	{var z=InStr(result, 'nonillones')
+	result=result.substring(0,z-1)+result.substring(z+9,result.length);}
+	result=FixSpaces(result);
+	return (result);
+}
+
+function NumerosPalavras(s)  {
+//Portuguese words for numbers
+	var a,b,c,j,orlen,result='';
+	if (s=='0') {return ('zero');}
+		orlen=s.length;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	for (var i = 0; i < s.length; i=i+3) {
+		j=s.length-i-1;
+		a=s.substring(j, j+1);
+		b=s.substring(j-1, j);
+		c=s.substring(j-2, j-1);
+		if (a!=' '){
+			var tb=s.substring(i, i+1), tc=s.substring(s.length-2,s.length-1), td=s.substring(s.length-1,s.length);
+			if ((i==3)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil '+result;}
+			else if (((i==6)&(c+b+a!='000') ) &(orlen==7)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='milhão '+result;}
+			else if ((i==6)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='milhões '+result;}
+			else if ((i==9)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil milhões'+result;}
+			else if (((i==12)&(c+b+a!='000') ) & (orlen==13)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='bilião '+result;}
+			else if ((i==12)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='biliões '+result;}
+			else if ((i==15)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil biliões'+result;}
+			else if (((i==18)&(c+b+a!='000') )& (orlen==19)&(a=='1'))  {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='trilião '+result;}
+			else if ((i==18)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='triliões '+result;}
+			else if ((i==21)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil triliões '+result;}
+			else if (((i==24)&(c+b+a!='000') )& (orlen==25)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='quadrilião '+result;}
+			else if ((i==24)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='quadriliões '+result;}
+			else if ((i==27)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil quadriliões '+result;}
+			else if (((i==30)&(c+b+a!='000') )& (orlen==31)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='quintilião '+result;}
+			else if ((i==30)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='quintiliões '+result;}
+			else if ((i==33)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil quintiliões '+result;}
+			else if (((i==36)&(c+b+a!='000') )& (orlen==37)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='sextilião '+result;}
+			else if ((i==36)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='sextiliões '+result;}
+			else if ((i==39)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil sextiliões '+result;}
+			else if (((i==42)&(c+b+a!='000') )& (orlen==43)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='septilião '+result;}
+			else if ((i==42)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='septiliões '+result;}
+			else if ((i==45)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='milseptiliões '+result;}
+			else if (((i==48)&(c+b+a!='000') )& (orlen==49)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='octilião '+result;}
+			else if ((i==48)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='octiliões '+result;}
+			else if ((i==51)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil octiliões '+result;}
+			else if (((i==54)&(c+b+a!='000') )& (orlen==55)&(a=='1')) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='nonilião '+result;}
+			else if ((i==57)&(c+b+a!='000') ) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='noniliões '+result;}
+			else if (i==60) {if((tb=='0')&(tc!='0')|(tb=='0')&(td!='0')) result=' e '+result;result='mil noniliões '+result;}
+		}
+		if ((b!=1) | (b==' ')){
+			if (a==1){result='um '+result;}
+			else if (a==2){result='dois '+result;}
+			else if (a==3){result='três '+result;}
+			else if (a==4){result='quatro '+result;}
+			else if (a==5){result='cinco '+result;}
+			else if (a==6){result='seis '+result;}
+			else if (a==7){result='sete '+result;}
+			else if (a==8){result='oito '+result;}
+			else if (a==9){result='nove '+result;}
+		}
+		if ((b!=' ')&(b!='0')){
+			if ((b==1)){
+				if (b+a==10){result='dez '+result;}
+				else if (b+a==11){result='onze '+result;}
+				else if (b+a==12){result='doze '+result;}
+				else if (b+a==13){result='treze '+result;}
+				else if (b+a==14){result='catorze '+result;}
+				else if (b+a==15){result='quinze '+result;}
+				else if (b+a==16){result='dezasseis '+result;}
+				else if (b+a==17){result='dezassete '+result;}
+				else if (b+a==18){result='dezoito '+result;}
+				else if (b+a==19){result='dezanove '+result;}
+				else if (b+a==20){result='vinte '+result;}
+			}
+			else{
+				var temp=''
+				if (a!=0){temp='e ';}
+				if (b==2){result='vinte '+temp+result;}
+				else if (b==3){result='trinta '+temp+result;}
+				else if (b==4){result='quarenta '+temp+result;}
+				else if (b==5){result='cinquenta '+temp+result;}
+				else if (b==6){result='sessenta '+temp+result;}
+				else if (b==7){result='setenta '+temp+result;}
+				else if (b==8){result='oitenta '+temp+result;}
+				else if (b==9){result='noventa '+temp+result;}
+				
+				}
+		}
+		if ((c!=' ')&(c!='0')){
+			if ((a=='0') & (b=='0')){
+				if (c==1){result='e cem '+result;}
+				else if (c==2){result='e duzentos '+result;}
+				else if (c==3){result='e trezentos '+result;}
+				else if (c==4){result='e quatrocentos '+result;}
+				else if (c==5){result='e quinhentos '+result;}
+				else if (c==6){result='e seiscentos '+result;}
+				else if (c==7){result='e setecentos '+result;}
+				else if (c==8){result='e oitocentos '+result;}
+				else if (c==9){result='e novecentos '+result;}
+			}
+			else{
+				if (c==1){result='cento e '+result;}
+				else if (c==2){result='duzentos e '+result;}
+				else if (c==3){result='trezentos e '+result;}
+				else if (c==4){result='quatrocentos e '+result;}
+				else if (c==5){result='quinhentos e '+result;}
+				else if (c==6){result='seiscentos e '+result;}
+				else if (c==7){result='setecentos e '+result;}
+				else if (c==8){result='oitocentos e '+result;}
+				else if (c==9){result='novecentos e '+result;}
+			}
+		}
+	}
+	result=FixSpaces(result);
+	result=Trim(result);
+	if (result.substring(0, 7)=='um mil ') result=result.substring(3,result.length);
+	if (result.substring(result.length-2, result.length)=='e ') 
+		result=result.substring(0,result.length-2);
+if (InStr(result, 'milhões')!=RInStr(result, 'milhões'))
+	{var z=InStr(result, 'milhões')
+	result=result.substring(0,z-1)+result.substring(z+6,result.length);}
+if (InStr(result, 'biliões')!=RInStr(result, 'biliões'))
+	{var z=InStr(result, 'biliões')
+	result=result.substring(0,z-1)+result.substring(z+6,result.length);}
+if (InStr(result, 'triliões')!=RInStr(result, 'triliões'))
+	{var z=InStr(result, 'triliões')
+	result=result.substring(0,z-1)+result.substring(z+7,result.length);}
+if (InStr(result, 'quadriliões')!=RInStr(result, 'quadriliões'))
+	{var z=InStr(result, 'quadriliões')
+	result=result.substring(0,z-1)+result.substring(z+10,result.length);}
+if (InStr(result, 'quintiliões')!=RInStr(result, 'quintiliões'))
+	{var z=InStr(result, 'quintiliões')
+	result=result.substring(0,z-1)+result.substring(z+10,result.length);}
+if (InStr(result, 'sextiliões')!=RInStr(result, 'sextiliões'))
+	{var z=InStr(result, 'sextiliões')
+	result=result.substring(0,z-1)+result.substring(z+9,result.length);}
+if (InStr(result, 'septiliões')!=RInStr(result, 'septiliões'))
+	{var z=InStr(result, 'septiliões')
+	result=result.substring(0,z-1)+result.substring(z+9,result.length);}
+if (InStr(result, 'octiliões')!=RInStr(result, 'octiliões'))
+	{var z=InStr(result, 'octiliões')
+	result=result.substring(0,z-1)+result.substring(z+8,result.length);}
+if (InStr(result, 'noniliões')!=RInStr(result, 'noniliões'))
+	{var z=InStr(result, 'noniliões')
+	result=result.substring(0,z-1)+result.substring(z+8,result.length);}
+	result=FixSpaces(result);
+	return (result);
+}
+
+function NumerosMots(s)  {
+//French words for numbers
+	var a,b,c,j,orlen,result='';
+	if (s=='0') {return ('zéro');}
+		orlen=s.length;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	if ((s.length % 3)>0)
+		s=' '+s;
+	for (var i = 0; i < s.length; i=i+3) {
+		j=s.length-i-1;
+		a=s.substring(j, j+1);
+		b=s.substring(j-1, j);
+		c=s.substring(j-2, j-1);
+		if (a!=' '){
+			if ((i==3)&(c+b+a!='000') ) {result='mille '+result;}
+			else if (((i==6)&(c+b+a!='000') ) &(orlen==7)&(a=='1')) {result='million '+result;}
+			else if ((i==6)&(c+b+a!='000') ) {result='millions '+result;}
+			else if ((i==9)&(c+b+a!='000') ) {result='mille millions'+result;}
+			else if (((i==12)&(c+b+a!='000') ) & (orlen==13)&(a=='1')) {result='billion '+result;}
+			else if ((i==12)&(c+b+a!='000') ) {result='billions '+result;}
+			else if ((i==15)&(c+b+a!='000') ) {result='mille billions'+result;}
+			else if (((i==18)&(c+b+a!='000') )& (orlen==19)&(a=='1'))  {result='trillion '+result;}
+			else if ((i==18)&(c+b+a!='000') ) {result='trillions '+result;}
+			else if ((i==21)&(c+b+a!='000') ) {result='mille trillions '+result;}
+			else if (((i==24)&(c+b+a!='000') )& (orlen==25)&(a=='1')) {result='quadrillion '+result;}
+			else if ((i==24)&(c+b+a!='000') ) {result='quadrillions '+result;}
+			else if ((i==27)&(c+b+a!='000') ) {result='mille quadrillions '+result;}
+			else if (((i==30)&(c+b+a!='000') )& (orlen==31)&(a=='1')) {result='quintillion '+result;}
+			else if ((i==30)&(c+b+a!='000') ) {result='quintillions '+result;}
+			else if ((i==33)&(c+b+a!='000') ) {result='mille quintillions '+result;}
+			else if (((i==36)&(c+b+a!='000') )& (orlen==37)&(a=='1')) {result='sextillion '+result;}
+			else if ((i==36)&(c+b+a!='000') ) {result='sextillions '+result;}
+			else if ((i==39)&(c+b+a!='000') ) {result='mille sextillions '+result;}
+			else if (((i==42)&(c+b+a!='000') )& (orlen==43)&(a=='1')) {result='septillion '+result;}
+			else if ((i==42)&(c+b+a!='000') ) {result='septillions '+result;}
+			else if ((i==45)&(c+b+a!='000') ) {result='milseptillions '+result;}
+			else if (((i==48)&(c+b+a!='000') )& (orlen==49)&(a=='1')) {result='octillion '+result;}
+			else if ((i==48)&(c+b+a!='000') ) {result='octillions '+result;}
+			else if ((i==51)&(c+b+a!='000') ) {result='mille octillions '+result;}
+			else if (((i==54)&(c+b+a!='000') )& (orlen==55)&(a=='1')) {result='nonillion '+result;}
+			else if ((i==57)&(c+b+a!='000') ) {result='nonillions '+result;}
+			else if (i==60) {result='mille nonillions '+result;}
+		}
+		if (((b!=1)&(b!=7)) | (b==' ')){
+			if (a==1){result='un '+result;}
+			else if (a==2){result='deux '+result;}
+			else if (a==3){result='trois '+result;}
+			else if (a==4){result='quatre '+result;}
+			else if (a==5){result='cinq '+result;}
+			else if (a==6){result='six '+result;}
+			else if (a==7){result='sept '+result;}
+			else if (a==8){result='huit '+result;}
+			else if (a==9){result='neuf '+result;}
+		}
+		if ((b!=' ')&(b!='0')){
+			if ((b==1) |(b==7) ){
+				if (b+a==10){result='dix '+result;}
+				else if (b+a==11){result='onze '+result;}
+				else if (b+a==12){result='douze '+result;}
+				else if (b+a==13){result='treize '+result;}
+				else if (b+a==14){result='quatorze '+result;}
+				else if (b+a==15){result='quinze '+result;}
+				else if (b+a==16){result='seize '+result;}
+				else if (b+a==17){result='dix-sept '+result;}
+				else if (b+a==18){result='dix-huit '+result;}
+				else if (b+a==19){result='dix-neuf '+result;}
+				else if (b+a==70){result='soixante-dix '+result;}
+				else if (b+a==71){result='soixante-onze '+result;}
+				else if (b+a==72){result='soixante-douze '+result;}
+				else if (b+a==73){result='soixante-treize '+result;}
+				else if (b+a==74){result='soixante-quatorze '+result;}
+				else if (b+a==75){result='soixante-quinze '+result;}
+				else if (b+a==76){result='soixante-seize '+result;}
+				else if (b+a==77){result='soixante-dix-sept '+result;}
+				else if (b+a==78){result='soixante-dix-huit '+result;}
+				else if (b+a==79){result='soixante-dix-neuf '+result;}
+				}
+			else{
+				var temp=''
+				if (a==1){temp='et ';}
+				if (a>1){temp='-';}
+				if (b==2){result='vingt '+temp+result;}
+				else if (b==3){result='trente '+temp+result;}
+				else if (b==4){result='quarante '+temp+result;}
+				else if (b==5){result='cinquante '+temp+result;}
+				else if (b==6){result='soixante '+temp+result;}
+				else if (b==7){result='soixante-dix '+temp+result;}
+				else if (b==8){result='quatre-vingts '+temp+result;}
+				else if (b==9){result='quatre-vingt-dix '+temp+result;}
+				}
+		}
+		if ((c!=' ')&(c!='0')){
+				if (c==1){result='cent '+result;}
+				else if (c==2){result='deux cents '+result;}
+				else if (c==3){result='trois cents '+result;}
+				else if (c==4){result='quatre cents '+result;}
+				else if (c==5){result='cinq cents '+result;}
+				else if (c==6){result='six cents '+result;}
+				else if (c==7){result='sept cents '+result;}
+				else if (c==8){result='huit cents '+result;}
+				else if (c==9){result='neuf cents '+result;}
+		}
+	}
+	result=FixSpaces(result);
+	result=Trim(result);
+	if (result.substring(0, 9)=='un mille ') result=result.substring(3,result.length);
+	if (result.substring(result.length-3, result.length)=='et ') 
+		result=result.substring(0,result.length-3);
+	if (result.substring(result.length-2, result.length)==' -') 
+		result=result.substring(0,result.length-2);
+if (InStr(result, 'millions')!=RInStr(result, 'millions'))
+	{var z=InStr(result, 'millions')
+	result=result.substring(0,z-1)+result.substring(z+7,result.length);}
+if (InStr(result, 'billions')!=RInStr(result, 'billions'))
+	{var z=InStr(result, 'billions')
+	result=result.substring(0,z-1)+result.substring(z+7,result.length);}
+if (InStr(result, 'trillions')!=RInStr(result, 'trillions'))
+	{var z=InStr(result, 'trillions')
+	result=result.substring(0,z-1)+result.substring(z+8,result.length);}
+if (InStr(result, 'quadrillions')!=RInStr(result, 'quadrillions'))
+	{var z=InStr(result, 'quadrillions')
+	result=result.substring(0,z-1)+result.substring(z+11,result.length);}
+if (InStr(result, 'quintillions')!=RInStr(result, 'quintillions'))
+	{var z=InStr(result, 'quintillions')
+	result=result.substring(0,z-1)+result.substring(z+11,result.length);}
+if (InStr(result, 'sextillions')!=RInStr(result, 'sextillions'))
+	{var z=InStr(result, 'sextillions')
+	result=result.substring(0,z-1)+result.substring(z+10,result.length);}
+if (InStr(result, 'septillions')!=RInStr(result, 'septillions'))
+	{var z=InStr(result, 'septillions')
+	result=result.substring(0,z-1)+result.substring(z+10,result.length);}
+if (InStr(result, 'octillions')!=RInStr(result, 'octillions'))
+	{var z=InStr(result, 'octillions')
+	result=result.substring(0,z-1)+result.substring(z+9,result.length);}
+if (InStr(result, 'nonillions')!=RInStr(result, 'nonillions'))
+	{var z=InStr(result, 'nonillions')
+	result=result.substring(0,z-1)+result.substring(z+9,result.length);}
+	result=FixSpaces(result);
+while (InStr(result, ' -')>0){
+	var z=InStr(result, ' -');
+	result=result.substring(0,z-1)+result.substring(z,result.length);
+	}
+return (result);
+}
+
+
+function Sayit(sentence)  {
+//text to speech using the Microsoft Speech Engine
+	sentence=sentence+' ';
+	var vt = new ActiveXObject('Speech.VoiceText');
+	vt.Register('', 'Sayit');
+	vt.Speak(sentence, 1);
+	while ( vt.IsSpeaking );
+}
+
+//InStr, RInStr, Trim, RTrim and LTrim developed by Guillermo 'guille' Som
+//Código ©Guillermo 'guille' Som, 1999
+//http://guille.costasol.net/html_ejemplos/vb2js.htm
+function InStr(n, s1, s2){
+	// Devuelve la posición de la primera ocurrencia de s2 en s1
+	// Si se especifica n, se empezará a comprobar desde esa posición
+	// Sino se especifica, los dos parámetros serán las cadenas
+	var numargs=InStr.arguments.length;
+	
+	if(numargs<3)
+		return n.indexOf(s1)+1;
+	else
+		return s1.indexOf(s2, n)+1;
+}
+
+function RInStr(n, s1, s2){
+	// Devuelve la posición de la última ocurrencia de s2 en s1
+	// Si se especifica n, se empezará a comprobar desde esa posición
+	// Sino se especifica, los dos parámetros serán las cadenas
+	var numargs=RInStr.arguments.length;
+	
+	if(numargs<3)
+		return n.lastIndexOf(s1)+1;
+	else
+		return s1.lastIndexOf(s2, n)+1;
+}
+
+function LTrim(s){
+	// Devuelve una cadena sin los espacios del principio
+	var i=0;
+	var j=0;
+	
+	// Busca el primer caracter <> de un espacio
+	for(i=0; i<=s.length-1; i++)
+		if(s.substring(i,i+1) != ' '){
+			j=i;
+			break;
+		}
+	return s.substring(j, s.length);
+}
+
+function RTrim(s){
+	// Quita los espacios en blanco del final de la cadena
+	var j=0;
+	
+	// Busca el último caracter <> de un espacio
+	for(var i=s.length-1; i>-1; i--)
+		if(s.substring(i,i+1) != ' '){
+			j=i;
+			break;
+		}
+	return s.substring(0, j+1);
+}
+
+function Trim(s){
+	// Quita los espacios del principio y del final
+	return LTrim(RTrim(s));
+}
+
+<!-- done hiding from old browsers -->
+</script>
+<BODY>
+
+<FORM>
+Number to words<BR>
+<BR>
+Number/N&uacute;mero <INPUT NAME="Number" TYPE="text" SIZE="60"><BR>
+<INPUT NAME="Calc" TYPE="button" VALUE="Calculate" ONCLICK="Calculate(this.form)">
+<INPUT NAME="Reset" TYPE="button" VALUE="Reset" ONCLICK="ClearForm(this.form)">
+<INPUT NAME="Say" TYPE="button" VALUE="Say it" ONCLICK="Sayit( form.English.value)"><BR>
+English<BR><TEXTAREA NAME="English" ROWS="5" COLS="90"></TEXTAREA><BR>
+Portuguese<BR><TEXTAREA NAME="Portuguese" ROWS="5" COLS="90"></TEXTAREA><BR>
+Spanish<BR><TEXTAREA NAME="Spanish" ROWS="5" COLS="90"></TEXTAREA><BR>
+French<BR><TEXTAREA NAME="French" ROWS="5" COLS="90"></TEXTAREA><BR>
+</FORM>
+</BODY>
+</HTML>
